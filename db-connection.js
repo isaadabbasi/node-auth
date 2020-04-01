@@ -3,19 +3,23 @@ const mongoose = require('mongoose');
 const estDBConnection = function estDBConnection() {
   const dbUsername = process.env.DB_USERNAME;
   const dbPassword = process.env.DB_PASSWORD;
-  const url = process.env.DB_URL.replace('<dbuser>', dbUsername).replace('<dbpassword>', dbPassword);
+  const url = process.env.DB_URL.replace('<dbuser>', dbUsername).replace(
+    '<dbpassword>',
+    dbPassword
+  );
 
-  if(!url || !dbPassword || !dbUsername) throw new Error('Invalid database configuration');
+  if (!url || !dbPassword || !dbUsername)
+    throw new Error('Invalid database configuration');
 
   mongoose
-    .connect(dbUrl, {
+    .connect(url, {
       reconnectTries: 3,
       useCreateIndex: true,
       useFindAndModify: false,
-      useNewUrlParser: true,
+      useNewUrlParser: true
     })
     .then(() => void console.log('⛓  - Database/MLab connection established'))
-    .catch((err) => void console.error(`Error connecting to mLab: `, err));
+    .catch(err => void console.error(`Error connecting to mLab: `, err));
 };
 
 process.on('SIGINT', () => {
@@ -24,5 +28,5 @@ process.on('SIGINT', () => {
 });
 
 module.exports = {
-  estDBConnection,
+  estDBConnection
 };
