@@ -1,14 +1,13 @@
 const Express = require('express');
 require('dotenv').config();
 const preInitialization = require('./pre-init');
-const authRoutes = require('./src/routes/auth');
+const registerRoutes = require('./src/routes');
 
 const app = Express();
 
 preInitialization(app);
-
+registerRoutes(app);
 // app.use(secureRoute({ global: true }));
-app.use('', authRoutes);
 
 const port = 4000;
 
